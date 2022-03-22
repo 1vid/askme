@@ -1,3 +1,5 @@
 class Question < ApplicationRecord
-  validates :text, presence: true
+  
+  belons_to :user
+  validates :text, :user, presence: true
 end
