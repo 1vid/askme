@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   
-  belons_to :user
-  validates :text, :user, presence: true
+  belongs_to :user
+  validates :question, :user, presence: true
+ 
 end
