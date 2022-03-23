@@ -1,4 +1,5 @@
 require'openssl'
+require 'uri'
 
 class User < ApplicationRecord
   #Параметры работы модулй шифрвания
@@ -6,6 +7,13 @@ class User < ApplicationRecord
   DIGEST = OpenSSL::Digest::SHA256.new
 
   has_many :questions
+
+  #Проверка формата электронной почты пользователя
+  validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP, on: :create
+  #Проверка максимальной длины юзернейма пользователя (не больше 40 символов)
+  validates :username, length: {maximum: 40}, allow_blank: true, on: :create
+  #Проверка формата юзернейма пользователя (только латинские буквы, цифры, и знак _)
+  validates_format_of :email, with: "/^[A-Za-z0-9_]+$/", on: :create
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
 
