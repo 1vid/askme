@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   validates :username, format: { with: /\A[a-zA-Z0-9_]{1,40}\z/ }
 
-  validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   validates :email, :username, 
             presence: true,
