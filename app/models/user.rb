@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   attr_accessor :password
 
-  before_validation :downcase_username
+  before_validation :downcase_username_email
 
   validates :username, format: { with: /\A[a-zA-Z0-9_]{1,40}\z/ }
 
@@ -49,7 +49,8 @@ class User < ApplicationRecord
     end
   end
 
-  def downcase_username
+  def downcase_username_email
     username&.downcase!
+    email&.downcase!
   end
 end
