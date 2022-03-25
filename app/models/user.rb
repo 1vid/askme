@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   before_validation :downcase_username_email
 
-  validates :username, format: { with: /\A[a-zA-Z0-9_]{1,40}\z/ }
+  validates :username, format: { with: /\A\w{1,40}\z/ }
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
@@ -26,6 +26,18 @@ class User < ApplicationRecord
     password_hash.unpack('H*')[0]
   end
 
+  def self.authenticate(email, password)
+    user = find_by(email: email)
+
+    if user.present? && user.password_hash == User.hash_to_string(
+      OpenSSL::PKCS5.pbkdf2_hmac(password, user.password_salt, ITERATIONS, DIGEST.length, DIGEST)
+    )
+      user
+    end
+  end
+
+  private
+  
   def encrypt_password
     if self.password.present?
       #создаем "соль" — рандомная строка усложняющая задачу хацкерам
@@ -36,16 +48,6 @@ class User < ApplicationRecord
       self.password_hash = User.hash_to_string(
         OpenSSL::PKCS5.pbkdf2_hmac(self.password, self.password_salt, ITERATIONS, DIGEST.length, DIGEST)
       )
-    end
-  end
-
-  def self.authenticate(email, password)
-    user = find_by(email: email)
-
-    if user.present? && user.password_hash == User.hash_to_string(
-      OpenSSL::PKCS5.pbkdf2_hmac(password, user.password_salt, ITERATIONS, DIGEST.length, DIGEST)
-    )
-      user
     end
   end
 
