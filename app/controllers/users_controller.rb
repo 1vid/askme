@@ -12,7 +12,14 @@ class UsersController < ApplicationController
     @user = User.new(
       name: 'Ilia',
       username: 'kucherjashka',
-      avatar_url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg'
+      avatar_url: 'https://avatarko.ru/img/kartinka/1/avatarko_anonim.jpg'
     )
+
+    @questions = [
+      Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2015')),
+      Question.new(text: 'В чем смысл жизни?', created_at: Date.parse('27.03.2015'))
+    ]
+
+    @new_question = Question.new
   end
 end
