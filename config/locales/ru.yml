@@ -5,7 +5,7 @@ ru:
         username: Никнейм
         name: Имя
         email: email
-        avatar_url: url аватарки
+        avatar_url: urlюха аватарки
         password: Пароль
         password_confirmation: Подтверждение пароля
       question:
