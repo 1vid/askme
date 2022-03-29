@@ -9,17 +9,17 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
 
     if @question.save
-      redirect_to user_path(@question.user), notice: 'Ты задал свой вопрос'
+      redirect_to user_path(@question.user), notice: t('.notice')
     else
-      render :new
+      render :edit
     end
   end
 
   def update
     if @question.update(question_params)
-      redirect_to user_path(@question.user), notice: 'Вопрос обновлен и засейвлен в великую базу тупых вопросов'
+      redirect_to user_path(@question.user), notice: t('.notice')
     else
-      render :new
+      render :edit
     end
   end
 
@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
     user = @question.user
     @question.destroy
 
-    redirect_to user_path(user), notice: 'Вопрос уничтожен'
+    redirect_to user_path(user), notice: t('.notice')
   end
 
   private

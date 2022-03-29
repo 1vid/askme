@@ -1,0 +1,59 @@
+ru:
+  activerecord:
+    attributes:
+      user:
+        username: Никнейм
+        name: Имя
+        email: email
+        avatar_url: url аватарки
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+      question:
+        text: Вопрос
+
+  users:
+    new:
+      alert: вы уже в матрице
+    create:
+      alert: вы уже в матрице
+      notice: Добро пожаловать в клуб!
+    edit:
+      alert: Сюда низя!
+    update:
+      notice: Поздравляю с апгрейдом чувак.
+
+  questions:
+    create:
+      notice: 'Ты задал свой вопрос'
+    update:
+      notice: 'Вопрос обновлен и засейвлен в великую базу тупых вопросов'
+    destroy:
+      notice: 'Вопрос уничтожен'
+
+  sessions:
+    create:
+      notice: 'залогинились - отлично, идем дальше'
+      alert: 'Почта не та или пароль не тот, давай еще разок'
+    destroy:
+      notice: 'С возвращением в Зион Нео!'
+
+  users:
+    show:
+      count:
+        zero: "вопросов"
+        one: "вопрос"
+        few: "вопроса"
+        many: "вопросов"
+        other: "вопроса"
+      count_answers:
+        zero: "ответов"
+        one: "ответ"
+        few: "ответа"
+        many: "ответов"
+        other: "ответа"
+      count_unanswered:
+        zero: "без ответа"
+        one: "без ответа"
+        few: "без ответа"
+        many: "без ответа"
+        other: "без ответа"

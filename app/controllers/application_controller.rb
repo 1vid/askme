@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def reject_user
-    redirect_to root_path, alert: 'Сюда низя!'
+    redirect_to root_path, alert: t('.alert')
   end
 end

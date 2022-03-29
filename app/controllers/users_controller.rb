@@ -8,16 +8,16 @@ class UsersController < ApplicationController
   end
 
   def new
-    redirect_to root_url, alert: 'вы уже в матрице' if current_user.present?
+    redirect_to root_url, alert: t('.alert') if current_user.present?
     @user = User.new
   end
 
   def create
-    redirect_to root_url, alert: 'вы уже в матрице' if current_user.present?
+    redirect_to root_url, alert: t('.alert') if current_user.present?
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to root_url, notice: 'Добро пожаловать в клуб!'
+      redirect_to root_url, notice: t('.notice')
     else
       render 'new'
     end
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to user_path(@user), notice: 'Поздравляю с апгрейдом чувак.'
+      redirect_to user_path(@user), notice: t('.notice  ')
     else
       render 'edit'
     end
@@ -36,8 +36,10 @@ class UsersController < ApplicationController
 
   def show
     @questions = @user.questions.order(created_at: :desc)
-
     @new_question = @user.questions.build
+    @questions_count = @questions.count
+    @answers_count = @questions.count(&:answer)
+    @unanswered_count = @questions_count - @answers_count
   end
 
   private
