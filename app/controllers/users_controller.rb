@@ -17,6 +17,7 @@ class UsersController < ApplicationController
 
     if @user.save
       redirect_to root_url, notice: t('.notice')
+      session[:user_id] = @user.id
     else
       render 'new'
     end
