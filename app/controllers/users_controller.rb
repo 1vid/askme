@@ -32,7 +32,12 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
-  end  
+  end
+
+  def destroy
+    @user.destroy if @user == current_user
+      redirect_to root_path, notice: t('.notice')
+  end
 
   def show
     @questions = @user.questions.order(created_at: :desc)

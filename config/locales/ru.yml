@@ -21,6 +21,8 @@ ru:
       alert: Сюда низя!
     update:
       notice: Поздравляю с апгрейдом чувак.
+    destroy:
+      notice: Твой аккаунт удален, но ты заходи если что =)
     show:
       question:
         zero: вопросов
