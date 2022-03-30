@@ -22,19 +22,19 @@ ru:
     update:
       notice: Поздравляю с апгрейдом чувак.
     show:
-      count:
+      question:
         zero: вопросов
         one: вопрос
         few: вопроса
         many: вопросов
         other: вопроса
-      count_answers:
+      answer:
         zero: ответов
         one: ответ
         few: ответа
         many: ответов
         other: ответа
-      count_unanswered:
+      unanswered_question:
         zero: без ответа
         one: без ответа
         few: без ответа
