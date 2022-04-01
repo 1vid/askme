@@ -1,15 +1,18 @@
 class User < ApplicationRecord
-  #Параметры работы модулй шифрвания
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
-
+  EMAIL_VAL_REGEXP = URI::MailTo::EMAIL_REGEXP
+  BACKGROUND_COLOR_REGEX = /\A#([\da-f]{3}){1,2}\z/
+  USERNAME_REGEX = /\A\w{1,40}\z/
+  DEFAULT_BACKGROUND_COLOR = '#5F9EA0'
+  
   attr_accessor :password
 
   before_validation :downcase_username_email
 
-  validates :username, format: { with: /\A\w{1,40}\z/ }
+  validates :username, format: { with: USERNAME_REGEX }
 
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, format: { with: EMAIL_VAL_REGEXP }
 
   validates :email, :username, 
             presence: true,
@@ -17,6 +20,7 @@ class User < ApplicationRecord
 
   validates :password, presence: true, on: :create
   validates :password, confirmation: true
+  validates :bg_color, format: {with: BACKGROUND_COLOR_REGEX}, on: :update
 
   before_save :encrypt_password
 
@@ -36,8 +40,12 @@ class User < ApplicationRecord
     end
   end
 
+  def background_color
+    bg_color || DEFAULT_BACKGROUND_COLOR
+  end
+
   private
-  
+
   def encrypt_password
     if self.password.present?
       #создаем "соль" — рандомная строка усложняющая задачу хацкерам
