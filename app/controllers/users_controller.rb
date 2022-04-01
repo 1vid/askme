@@ -35,8 +35,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy if @user == current_user
-      redirect_to root_path, notice: t('.notice')
+    @user.destroy
+    session[:user_id] = nil
+    redirect_to root_path, notice: t('.notice')
   end
 
   def show
@@ -48,6 +49,7 @@ class UsersController < ApplicationController
   end
 
   private
+  
   def authorize_user
     reject_user if @user != current_user
   end
