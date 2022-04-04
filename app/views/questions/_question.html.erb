@@ -25,3 +25,9 @@
     </div>
   <% end %>
 </div>
+
+<% if question.author.present? %>
+  <div class="question-date">
+    Автор вопроса: <%= link_to question.author.username, user_path(question.author.id) %>
+  </div>
+<% end %>
