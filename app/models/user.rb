@@ -2,7 +2,7 @@ class User < ApplicationRecord
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
   EMAIL_VAL_REGEXP = URI::MailTo::EMAIL_REGEXP
-  BACKGROUND_COLOR_REGEX = /\A#([\da-f]{3}){1,2}\z/
+  BACKGROUND_COLOR_REGEX = /\A(#\h+)\z/
   USERNAME_REGEX = /\A\w{1,40}\z/
   DEFAULT_BACKGROUND_COLOR = '#5F9EA0'
   
@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   validates :password, presence: true, on: :create
   validates :password, confirmation: true
-  validates :bg_color, format: {with: BACKGROUND_COLOR_REGEX}, on: :update
+  validates :bg_color, format: {with: BACKGROUND_COLOR_REGEX}
 
   before_save :encrypt_password
 
@@ -41,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def background_color
-    bg_color || DEFAULT_BACKGROUND_COLOR
+    bg_color
   end
 
   private
