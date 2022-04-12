@@ -12,6 +12,7 @@ gem 'rails-i18n', '~> 6.0.0'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'uglifier'
 gem 'rails_12factor'
+gem 'dry-transaction', '~> 0.13.3'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
