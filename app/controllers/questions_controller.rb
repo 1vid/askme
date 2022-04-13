@@ -6,18 +6,23 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
-    @question.author = current_user
+    Questions::Create.(
+      params: question_create_params,
+      current_user: current_user,
+    ) do |m|
+      m.failure :validation do |result|
+        @question = result[:question]
+        render :edit
+      end
 
-    if @question.save
-      redirect_to user_path(@question.user), notice: t('.notice')
-    else
-      render :edit
+      m.success do |result|
+        redirect_to user_path(result[:question].user), notice: t('.notice')
+      end
     end
   end
 
   def update
-    if @question.update(question_params)
+    if @question.update(question_params_update)
       redirect_to user_path(@question.user), notice: t('.notice')
     else
       render :edit
@@ -32,6 +37,7 @@ class QuestionsController < ApplicationController
   end
 
   private
+
   def load_question
     @question = Question.find(params[:id])
   end
@@ -40,11 +46,11 @@ class QuestionsController < ApplicationController
     reject_user if @question.user != current_user
   end
 
-  def question_params
-    if current_user.present? && params[:question][:user_id].to_i == current_user.id
-      params.require(:question).permit(:user_id, :text, :answer)
-    else
-      params.require(:question).permit(:user_id, :text)
-    end
+  def question_create_params
+    params.require(:question).permit(:user_id, :text)
+  end
+
+  def question_params_update
+    params.require(:question).permit(:answer)
   end
 end
