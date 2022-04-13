@@ -9,6 +9,8 @@
         </ul>
       </div>
     <% end %>
+    <%# вот эти скрытые поля вообще штука мега полезная - без нее в :edit user_id теряется %>
+    <%= f.hidden_field :user_id %> 
 
     <div class='form-field'>
       <%= f.label :text, 'Вопрос', class: 'form-label' %>

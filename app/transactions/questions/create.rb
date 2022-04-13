@@ -20,7 +20,7 @@ module Questions
     end
 
     def persistence(input)
-      input[:question].save
+      QuestionSave.(input[:question])
 
       Success(input)
     end
