@@ -17,7 +17,7 @@
 
   <% if question.user == current_user %>
     <% edit_icon = question.answer.blank? ? 'reply' : 'pencil' %>
-
+  
     <div class="question-actions">
       <%= link_to fa_icon(edit_icon), edit_question_path(question) %>
       <%= link_to fa_icon('trash-o'), question_path(question),

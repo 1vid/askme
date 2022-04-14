@@ -22,18 +22,16 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    Questions::Update.(
-      params: question_params_update,
-      current_user: current_user,
-    ) do |m|
-      m.failure :validation do |result|
-        @question = result[:question]
-        render :edit
-      end
-
-      m.success do |result|
-        redirect_to user_path(result[:question].user), notice: t('.notice')
-      end
+    if @question.update(question_params_update)
+      @question.hashtags =
+      "#{@question.text} #{@question.answer}"
+        .downcase
+        .scan(Hashtag::HASH_TAG_REGEX)
+        .uniq
+        .map { |hashtag| Hashtag.find_or_create_by(text: hashtag.delete('#')) }
+      redirect_to user_path(@question.user), notice: t('.notice')
+    else
+      render :edit
     end
   end
 
