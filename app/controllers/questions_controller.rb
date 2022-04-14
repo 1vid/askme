@@ -22,11 +22,25 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params_update)
-      redirect_to user_path(@question.user), notice: t('.notice')
-    else
-      render :edit
+    Questions::Update.(
+      params: question_params_update,
+      current_user: current_user,
+    ) do |m|
+      m.failure :validation do |result|
+        @question = result[:question]
+        render :edit
+      end
+
+      m.success do |result|
+        redirect_to user_path(result[:question].user), notice: t('.notice')
+      end
     end
+
+    # if @question.update(question_params_update)
+    #   redirect_to user_path(@question.user), notice: t('.notice')
+    # else
+    #   render :edit
+    # end
   end
 
   def destroy
@@ -51,6 +65,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params_update
-    params.require(:question).permit(:answer)
+    params.require(:question).permit(:user_id, :answer, :text)
   end
 end
