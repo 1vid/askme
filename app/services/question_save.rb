@@ -13,6 +13,7 @@ class QuestionSave
           .scan(Hashtag::HASH_TAG_REGEX)
           .uniq
           .map { |hashtag| Hashtag.find_or_create_by(text: hashtag.delete('#')) }
+          # .map { |hashtag| Hashtag.where(text: hashtag.delete('#')) || answer: hashtag.delete('#')) }
     end
   end
 
