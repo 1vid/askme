@@ -35,12 +35,6 @@ class QuestionsController < ApplicationController
         redirect_to user_path(result[:question].user), notice: t('.notice')
       end
     end
-
-    # if @question.update(question_params_update)
-    #   redirect_to user_path(@question.user), notice: t('.notice')
-    # else
-    #   render :edit
-    # end
   end
 
   def destroy
