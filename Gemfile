@@ -13,6 +13,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'uglifier'
 gem 'rails_12factor'
 gem 'dry-transaction', '~> 0.13.3'
+gem 'where_exists', '~> 2.0'
 
 group :development, :test do
   gem 'pry-rails', '~> 0.3.4'
