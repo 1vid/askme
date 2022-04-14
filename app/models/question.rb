@@ -8,4 +8,12 @@ class Question < ApplicationRecord
   validates :text, 
             presence: true,
             length: { minimum: 3, maximum: 255 }
+
+  before_update :nilize_empty_answer
+
+  def nilize_empty_answer
+    attributes.each do |column, value|
+      self[column].present? || self[column] = nil
+    end
+  end
 end

@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :load_question, only: %i[ show edit update destroy ]
   before_action :authorize_user, except: [:create]
+  
 
   def edit
   end
@@ -23,6 +24,7 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params_update)
+      @question.answer = @question.answer.presence
       @question.hashtags =
       "#{@question.text} #{@question.answer}"
         .downcase
