@@ -51,7 +51,7 @@
         <%= f.label :password_confirmation, 'Пароль ещё раз', class: 'form-label' %>
         <%= f.password_field :password_confirmation, class: 'form-text-field' %>
       </div>
-
+      <%= recaptcha_tags %>
       <div class='form-action'>
         <%= f.submit 'Зарегистрироваться', class: 'button button-small button-dark' %>
       </div>
