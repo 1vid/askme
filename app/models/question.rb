@@ -10,10 +10,20 @@ class Question < ApplicationRecord
             length: { minimum: 3, maximum: 255 }
 
   before_update :nilize_empty_answer
+  after_commit :create_hashtag
 
   def nilize_empty_answer
     attributes.each do |column, value|
       self[column].present? || self[column] = nil
     end
+  end 
+
+  def create_hashtag
+    self.hashtags =
+    "#{self.text} #{self.answer}"
+      .downcase
+      .scan(Hashtag::HASH_TAG_REGEX)
+      .uniq
+      .map { |hashtag| Hashtag.find_or_create_by(text: hashtag.delete('#')) }
   end
 end

@@ -1,35 +1,23 @@
 class QuestionsController < ApplicationController
   before_action :load_question, only: %i[ show edit update destroy ]
   before_action :authorize_user, except: [:create]
-  
 
   def edit
   end
 
   def create
-    Questions::Create.(
-      params: question_create_params,
-      current_user: current_user,
-    ) do |m|
-      m.failure :validation do |result|
-        @question = result[:question]
-        render :edit
-      end
+    @question = Question.new(question_create_params)
+    @question.author = current_user
 
-      m.success do |result|
-        redirect_to user_path(result[:question].user), notice: t('.notice')
-      end
+    if check_captcha(@question) && @question.save
+      redirect_to user_path(@question.user), notice: t('.notice')
+    else
+      render :edit
     end
   end
 
   def update
     if @question.update(question_params_update)
-      @question.hashtags =
-      "#{@question.text} #{@question.answer}"
-        .downcase
-        .scan(Hashtag::HASH_TAG_REGEX)
-        .uniq
-        .map { |hashtag| Hashtag.find_or_create_by(text: hashtag.delete('#')) }
       redirect_to user_path(@question.user), notice: t('.notice')
     else
       render :edit
@@ -59,5 +47,9 @@ class QuestionsController < ApplicationController
 
   def question_params_update
     params.require(:question).permit(:user_id, :answer, :text)
+  end
+
+  def check_captcha(model)
+    current_user.present? || verify_recaptcha(model: model)
   end
 end
